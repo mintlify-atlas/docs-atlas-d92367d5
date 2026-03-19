@@ -1,0 +1,83 @@
+{
+  "projectType": "saas",
+  "projectName": "Personal Finance Tracker",
+  "projectDescription": "A web-based personal finance tracker that lets users log expenses by category, set monthly budget limits, and visualize spending with interactive charts.",
+  "theme": "almond",
+  "primaryColor": "#2ECC71",
+  "lightColor": "#A8F0C6",
+  "darkColor": "#1A7A43",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": ["introduction", "quickstart"]
+          },
+          {
+            "group": "Core Features",
+            "pages": [
+              "features/expense-management",
+              "features/budget-tracking",
+              "features/charts-and-stats"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/installation",
+              "guides/configuration",
+              "guides/categories"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Expenses",
+            "pages": [
+              "api/expenses/list",
+              "api/expenses/create",
+              "api/expenses/update",
+              "api/expenses/delete"
+            ]
+          },
+          {
+            "group": "Budgets",
+            "pages": [
+              "api/budgets/list",
+              "api/budgets/set"
+            ]
+          },
+          {
+            "group": "Statistics",
+            "pages": [
+              "api/stats/overview"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Add, edit, and delete expense entries with amount, category, date, and description",
+    "Set per-category monthly budget limits with visual progress bars",
+    "Interactive doughnut chart for category spending distribution",
+    "Bar chart comparing budget limits vs actual spending",
+    "Dashboard stats showing total expenses, transaction count, and average expense",
+    "SQLite-backed persistent storage via a Flask REST API",
+    "Seven built-in expense categories: Food, Transport, Shopping, Entertainment, Bills, Health, Other"
+  ],
+  "publicApiSurface": [
+    "GET /api/expenses",
+    "POST /api/expenses",
+    "PUT /api/expenses/<expense_id>",
+    "DELETE /api/expenses/<expense_id>",
+    "GET /api/budgets",
+    "POST /api/budgets",
+    "GET /api/stats"
+  ]
+}
