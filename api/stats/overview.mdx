@@ -1,0 +1,81 @@
+---
+title: 'Get statistics'
+description: 'Retrieve aggregated spending totals across all expenses.'
+---
+
+`GET /api/stats`
+
+Returns a summary of total spending, broken down by category. Useful for dashboards and budget-vs-actual comparisons.
+
+## Response
+
+<ResponseField name="total_expenses" type="number" required>
+  Sum of all expense amounts across every category. Returns `0` when no expenses have been recorded.
+</ResponseField>
+
+<ResponseField name="category_totals" type="object" required>
+  An object mapping each category to its total spend. Only categories with at least one expense are included.
+
+  <Expandable title="category_totals properties">
+    <ResponseField name="Food" type="number">
+      Total spend in the Food category.
+    </ResponseField>
+
+    <ResponseField name="Transport" type="number">
+      Total spend in the Transport category.
+    </ResponseField>
+
+    <ResponseField name="Shopping" type="number">
+      Total spend in the Shopping category.
+    </ResponseField>
+
+    <ResponseField name="Entertainment" type="number">
+      Total spend in the Entertainment category.
+    </ResponseField>
+
+    <ResponseField name="Bills" type="number">
+      Total spend in the Bills category.
+    </ResponseField>
+
+    <ResponseField name="Health" type="number">
+      Total spend in the Health category.
+    </ResponseField>
+
+    <ResponseField name="Other" type="number">
+      Total spend in the Other category.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Examples
+
+<CodeGroup>
+
+```bash curl
+curl --request GET \
+  --url http://localhost:5000/api/stats
+```
+
+```javascript JavaScript
+const response = await fetch('http://localhost:5000/api/stats');
+const stats = await response.json();
+
+console.log(stats);
+```
+
+</CodeGroup>
+
+### Sample response
+
+```json
+{
+  "total_expenses": 623.47,
+  "category_totals": {
+    "Food": 312.15,
+    "Transport": 88.00,
+    "Shopping": 134.99,
+    "Entertainment": 29.99,
+    "Bills": 58.34
+  }
+}
+```

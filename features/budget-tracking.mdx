@@ -1,0 +1,82 @@
+---
+title: Budget tracking
+description: Set monthly spending limits per category and monitor your progress with real-time progress bars and charts.
+keywords: [budget, spending limit, category budget, over budget, progress bar, budget vs actual]
+---
+
+Budget tracking lets you define a monthly spending cap for any of the seven categories. As you log expenses, each category's progress bar fills up relative to its limit, giving you an immediate visual signal of how close you are to overspending.
+
+## How budgets work
+
+Each category can have exactly one active budget limit. Limits are stored in the `budgets` table using a `UNIQUE` constraint on the category column, and the API uses `INSERT OR REPLACE` (an upsert) when saving. This means:
+
+- Setting a budget for a category that has no limit **creates** the limit.
+- Setting a budget for a category that already has a limit **replaces** the existing value with the new one.
+
+There is no separate "edit budget" flow — just set the budget again with the new amount.
+
+## Setting a budget limit
+
+<Steps>
+  <Step title="Locate the budget form">
+    Find the **Set Budget Limits** form on the dashboard, below the expense table.
+  </Step>
+  <Step title="Select a category">
+    Choose one of the seven categories from the dropdown: Food, Transport, Shopping, Entertainment, Bills, Health, or Other.
+  </Step>
+  <Step title="Enter a monthly limit">
+    Type the maximum amount (in USD) you want to spend in that category this month.
+  </Step>
+  <Step title="Click Set Budget">
+    Click **Set Budget**. The budget is saved and the progress bar for that category appears (or updates) in the budget list immediately.
+  </Step>
+</Steps>
+
+## Progress bars
+
+The budget list shows one progress bar per category that has a limit set. Each bar:
+
+- Fills proportionally based on actual spending divided by the budget limit.
+- Displays the amount spent and the total limit (for example, "$42.50 / $100.00").
+- Stays within the bar width at 100% and does not overflow the UI element.
+
+<Warning>
+  When a category's actual spending exceeds its budget limit, the progress bar turns red and receives the `over-budget` CSS class. This is your signal that you have gone past the cap for that category.
+</Warning>
+
+## Budget vs Actual bar chart
+
+The **Budget vs Actual** bar chart on the dashboard shows a side-by-side comparison for every category that has a budget set:
+
+- The **budget limit bar** (lighter color) represents the cap you defined.
+- The **actual spending bar** (darker color) represents what you have spent so far.
+
+The chart updates automatically whenever you add, edit, or delete an expense, or change a budget limit.
+
+## Categories and suggested limits
+
+Personal Finance Tracker includes seven fixed categories. The table below describes each and provides a rough monthly limit range as a starting point — adjust these to match your own income and lifestyle.
+
+| Category | What it covers | Suggested monthly range |
+|---|---|---|
+| **Food** | Groceries, restaurants, coffee, takeaway | $200 – $600 |
+| **Transport** | Fuel, public transit, rideshare, parking | $50 – $300 |
+| **Shopping** | Clothing, electronics, household goods | $50 – $400 |
+| **Entertainment** | Streaming, events, hobbies, dining out for fun | $30 – $200 |
+| **Bills** | Rent, utilities, insurance, subscriptions | $500 – $2,000 |
+| **Health** | Doctor visits, prescriptions, gym, wellness | $30 – $300 |
+| **Other** | Anything that does not fit the above | $20 – $150 |
+
+## Tips for effective budgeting
+
+<Tip>
+  Start by setting budgets only for your two or three highest-spend categories. Get a feel for your baseline before adding limits everywhere.
+</Tip>
+
+<Tip>
+  Review your Budget vs Actual chart at the end of each month. If a category consistently goes over, either reduce spending or raise the limit to a more realistic figure.
+</Tip>
+
+<Tip>
+  Use the **Other** category as a catch-all buffer. Setting a small limit there helps you notice when miscellaneous costs are quietly adding up.
+</Tip>

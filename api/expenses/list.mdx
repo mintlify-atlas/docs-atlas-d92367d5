@@ -1,0 +1,82 @@
+---
+title: 'List expenses'
+description: 'Retrieve all expenses ordered by date, most recent first.'
+---
+
+`GET /api/expenses`
+
+Returns an array of all expenses stored in the database, ordered by date descending.
+
+## Response
+
+<ResponseField name="[]" type="object[]">
+  Array of expense objects.
+
+  <Expandable title="expense properties" defaultOpen>
+    <ResponseField name="id" type="integer" required>
+      Unique identifier for the expense.
+    </ResponseField>
+
+    <ResponseField name="amount" type="number" required>
+      Expense amount.
+    </ResponseField>
+
+    <ResponseField name="category" type="string" required>
+      Expense category. One of: `Food`, `Transport`, `Shopping`, `Entertainment`, `Bills`, `Health`, `Other`.
+    </ResponseField>
+
+    <ResponseField name="date" type="string" required>
+      Date of the expense in `YYYY-MM-DD` format.
+    </ResponseField>
+
+    <ResponseField name="description" type="string">
+      Optional description of the expense.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Examples
+
+<CodeGroup>
+
+```bash curl
+curl --request GET \
+  --url http://localhost:5000/api/expenses
+```
+
+```javascript JavaScript
+const response = await fetch('http://localhost:5000/api/expenses');
+const expenses = await response.json();
+
+console.log(expenses);
+```
+
+</CodeGroup>
+
+### Sample response
+
+```json
+[
+  {
+    "id": 3,
+    "amount": 45.99,
+    "category": "Food",
+    "date": "2026-03-19",
+    "description": "Grocery run"
+  },
+  {
+    "id": 2,
+    "amount": 12.50,
+    "category": "Transport",
+    "date": "2026-03-18",
+    "description": "Bus pass top-up"
+  },
+  {
+    "id": 1,
+    "amount": 9.99,
+    "category": "Entertainment",
+    "date": "2026-03-17",
+    "description": "Streaming subscription"
+  }
+]
+```

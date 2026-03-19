@@ -1,0 +1,68 @@
+---
+title: 'List budgets'
+description: 'Retrieve all configured budget limits.'
+---
+
+`GET /api/budgets`
+
+Returns an array of all budgets. Each budget defines a spending limit for a given category.
+
+## Response
+
+<ResponseField name="[]" type="object[]">
+  Array of budget objects.
+
+  <Expandable title="budget properties" defaultOpen>
+    <ResponseField name="id" type="integer" required>
+      Unique identifier for the budget.
+    </ResponseField>
+
+    <ResponseField name="category" type="string" required>
+      The expense category this budget applies to. One of: `Food`, `Transport`, `Shopping`, `Entertainment`, `Bills`, `Health`, `Other`.
+    </ResponseField>
+
+    <ResponseField name="limit_amount" type="number" required>
+      The maximum spending limit for the category.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Examples
+
+<CodeGroup>
+
+```bash curl
+curl --request GET \
+  --url http://localhost:5000/api/budgets
+```
+
+```javascript JavaScript
+const response = await fetch('http://localhost:5000/api/budgets');
+const budgets = await response.json();
+
+console.log(budgets);
+```
+
+</CodeGroup>
+
+### Sample response
+
+```json
+[
+  {
+    "id": 1,
+    "category": "Food",
+    "limit_amount": 400.00
+  },
+  {
+    "id": 2,
+    "category": "Transport",
+    "limit_amount": 100.00
+  },
+  {
+    "id": 3,
+    "category": "Entertainment",
+    "limit_amount": 50.00
+  }
+]
+```

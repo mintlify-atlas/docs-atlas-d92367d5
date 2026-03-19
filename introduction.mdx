@@ -1,0 +1,62 @@
+---
+title: 'Introduction'
+description: 'A self-hosted personal finance tracker built with Flask and SQLite for managing expenses and budgets.'
+---
+
+Personal Finance Tracker is a lightweight, self-hosted web application for recording daily expenses, organizing them by category, setting monthly budgets, and visualizing spending patterns over time. It runs entirely on your own machine — no accounts, no subscriptions, no data sent to third-party services.
+
+## Key features
+
+<CardGroup cols={2}>
+  <Card title="Expense management" icon="receipt" href="/quickstart">
+    Add, edit, and delete expenses with amounts, categories, dates, and optional descriptions. All data is stored locally in a SQLite database.
+  </Card>
+  <Card title="Budget limits" icon="wallet" href="/quickstart">
+    Set per-category spending limits. The app tracks how much of each budget you have used so you can stay on target.
+  </Card>
+  <Card title="Spending visualizations" icon="chart-bar" href="/quickstart">
+    Interactive charts powered by Chart.js show your spending breakdown by category and trends over time.
+  </Card>
+  <Card title="Category organization" icon="tags" href="/quickstart">
+    Expenses are organized into seven built-in categories: Food, Transport, Shopping, Entertainment, Bills, Health, and Other.
+  </Card>
+  <Card title="REST API" icon="code" href="/quickstart">
+    A clean JSON API backs the UI, making it straightforward to query or modify data programmatically or integrate with other tools.
+  </Card>
+  <Card title="Zero dependencies" icon="box" href="/quickstart">
+    Requires only Python and Flask. No external database server, no message queue, no container runtime needed to get started.
+  </Card>
+</CardGroup>
+
+## Technology stack
+
+| Layer | Technology | Purpose |
+|---|---|---|
+| Backend | [Flask](https://flask.palletsprojects.com/) | HTTP server and routing |
+| Database | SQLite | Local, file-based data storage |
+| Charts | [Chart.js](https://www.chartjs.org/) | Interactive spending visualizations |
+| Frontend | Vanilla JavaScript | UI interactions without a framework |
+
+Flask serves a small set of JSON API endpoints (`/api/expenses`, `/api/budgets`, `/api/stats`) alongside a single-page HTML frontend. SQLite stores all data in a single `database.db` file, so backups are as simple as copying one file.
+
+## Who it is for
+
+Personal Finance Tracker is designed for individuals who want to:
+
+- Track spending without sharing financial data with a cloud service
+- Run a simple finance tool on a home server or personal laptop
+- Customize or extend the codebase to fit their own workflow
+- Learn how a Flask + SQLite application is structured
+
+It is intentionally single-user and self-hosted. There is no authentication layer, so it should be run on a trusted local network or behind appropriate access controls if exposed beyond localhost.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Get the app running locally in under five minutes.
+  </Card>
+  <Card title="API reference" icon="brackets-curly" href="/quickstart">
+    Explore the expense, budget, and stats endpoints.
+  </Card>
+</CardGroup>

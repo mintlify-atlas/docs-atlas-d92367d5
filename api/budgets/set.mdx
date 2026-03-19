@@ -1,0 +1,66 @@
+---
+title: 'Set budget'
+description: 'Create or update the spending limit for a category.'
+---
+
+`POST /api/budgets`
+
+Sets a spending limit for a category. If a budget for the given category already exists, it is updated. If not, a new budget is created.
+
+<Info>
+  This endpoint uses an upsert (INSERT OR REPLACE) under the hood. You can safely call it multiple times for the same category — each call will overwrite the previous limit rather than create a duplicate.
+</Info>
+
+## Request body
+
+<ParamField body="category" type="string" required>
+  The expense category to set a budget for. Must be one of: `Food`, `Transport`, `Shopping`, `Entertainment`, `Bills`, `Health`, `Other`.
+</ParamField>
+
+<ParamField body="limit_amount" type="number" required>
+  The maximum spending limit for the category.
+</ParamField>
+
+## Response
+
+<ResponseField name="message" type="string" required>
+  Confirmation message. Always `"Budget set successfully"`.
+</ResponseField>
+
+## Examples
+
+<CodeGroup>
+
+```bash curl
+curl --request POST \
+  --url http://localhost:5000/api/budgets \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "category": "Food",
+    "limit_amount": 400.00
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('http://localhost:5000/api/budgets', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    category: 'Food',
+    limit_amount: 400.00,
+  }),
+});
+
+const result = await response.json();
+console.log(result);
+```
+
+</CodeGroup>
+
+### Sample response
+
+```json
+{
+  "message": "Budget set successfully"
+}
+```

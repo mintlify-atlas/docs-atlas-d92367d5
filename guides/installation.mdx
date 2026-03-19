@@ -1,0 +1,177 @@
+---
+title: 'Installation'
+description: 'Set up the Personal Finance Tracker on your local machine.'
+keywords: ['installation', 'setup', 'flask', 'python', 'expense tracker']
+---
+
+## System requirements
+
+Before you begin, make sure your system meets the following requirements:
+
+- **Python 3.7 or higher** — the app uses f-strings and other modern Python features
+- **pip** — Python's package manager, included with Python 3.4+
+- A terminal (macOS Terminal, Linux shell, or Windows PowerShell / Command Prompt)
+
+To verify your Python version:
+
+```bash
+python --version
+# or
+python3 --version
+```
+
+## Installation steps
+
+<Steps>
+  <Step title="Clone the repository">
+    Clone the project from GitHub to your local machine:
+
+    ```bash
+    git clone https://github.com/shaikmohammedrehaan48/RealTimeProject-March-19TH
+    ```
+
+    This creates a new folder called `RealTimeProject-March-19TH` in your current directory.
+  </Step>
+
+  <Step title="Navigate to the expense-tracker directory">
+    The Flask application lives inside the `expense-tracker` subdirectory:
+
+    ```bash
+    cd RealTimeProject-March-19TH/expense-tracker
+    ```
+
+    You should see the following files:
+
+    ```
+    app.py
+    static/
+    templates/
+    ```
+
+    The `database.db` file does not exist yet — it will be created automatically when you first run the app.
+  </Step>
+
+  <Step title="Install Flask">
+    Install the Flask web framework using pip. Use whichever command matches your Python setup:
+
+    <CodeGroup>
+
+    ```bash pip
+    pip install flask
+    ```
+
+    ```bash pip3
+    pip3 install flask
+    ```
+
+    </CodeGroup>
+
+    To confirm Flask installed correctly:
+
+    <CodeGroup>
+
+    ```bash pip
+    pip show flask
+    ```
+
+    ```bash pip3
+    pip3 show flask
+    ```
+
+    </CodeGroup>
+
+    You should see output like `Name: Flask` with a version number.
+  </Step>
+
+  <Step title="Run the application">
+    Start the Flask development server:
+
+    <CodeGroup>
+
+    ```bash python
+    python app.py
+    ```
+
+    ```bash python3
+    python3 app.py
+    ```
+
+    </CodeGroup>
+
+    You should see output similar to:
+
+    ```
+    * Running on http://127.0.0.1:5000
+    * Debug mode: on
+    ```
+
+    The app initializes the SQLite database (`database.db`) on startup if it doesn't already exist.
+
+    <Note>
+      The server runs with `debug=True` by default. This enables auto-reload on code changes and shows detailed error pages. Do not use debug mode in a production environment.
+    </Note>
+  </Step>
+
+  <Step title="Verify the app is running">
+    Open your browser and go to:
+
+    ```
+    http://localhost:5000
+    ```
+
+    You should see the Personal Finance Tracker dashboard. If the page loads, your installation is complete.
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Port already in use" icon="plug">
+    If you see an error like `Address already in use` or `OSError: [Errno 98]`, port 5000 is occupied by another process.
+
+    To run the app on a different port, edit the last line of `app.py`:
+
+    ```python app.py
+    if __name__ == '__main__':
+        app.run(debug=True, port=5001)
+    ```
+
+    Then restart the server and visit `http://localhost:5001` instead.
+  </Accordion>
+
+  <Accordion title="ModuleNotFoundError: No module named 'flask'" icon="triangle-alert">
+    Flask is not installed in the Python environment you're using. Run the install command again:
+
+    <CodeGroup>
+
+    ```bash pip
+    pip install flask
+    ```
+
+    ```bash pip3
+    pip3 install flask
+    ```
+
+    </CodeGroup>
+
+    If you're using a virtual environment, make sure it's activated before installing and before running the app.
+  </Accordion>
+
+  <Accordion title="PermissionError on database.db" icon="lock">
+    If you see `PermissionError: [Errno 13] Permission denied: 'database.db'`, the app cannot write to the directory.
+
+    Check that your user has write permission in the `expense-tracker` directory:
+
+    ```bash
+    ls -la
+    ```
+
+    If needed, fix permissions:
+
+    ```bash
+    chmod u+w .
+    ```
+
+    On Windows, make sure the directory is not marked as read-only in its Properties panel.
+  </Accordion>
+</AccordionGroup>

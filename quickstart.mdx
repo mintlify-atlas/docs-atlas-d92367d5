@@ -1,80 +1,126 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: 'Quickstart'
+description: 'Get Personal Finance Tracker running locally in under five minutes.'
 ---
 
-## Get started in three steps
+This guide walks you through installing, starting, and making your first entries in Personal Finance Tracker.
 
-Get your documentation site running locally and make your first customization.
+## Prerequisites
 
-### Step 1: Set up your local environment
-
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
-
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
-
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 3: Go live
-
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
-
-## Next steps
-
-Now that you have your docs running, explore these key features:
-
-<CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
-</CardGroup>
+- Python 3.8 or later
+- `pip` (included with Python 3.4+)
+- A terminal and a web browser
 
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+  Verify your Python version before starting: `python --version` or `python3 --version`.
 </Note>
+
+## Setup
+
+<Steps>
+  <Step title="Get the source code">
+    Download or clone the project to your machine.
+
+    <CodeGroup>
+
+    ```bash git clone
+    git clone https://github.com/your-org/personal-finance-tracker.git
+    ```
+
+    ```bash download zip
+    # Download the ZIP from the repository and unzip it
+    unzip personal-finance-tracker.zip
+    ```
+
+    </CodeGroup>
+  </Step>
+
+  <Step title="Navigate to the app directory">
+    The Flask application lives inside the `expense-tracker/` subdirectory.
+
+    ```bash
+    cd personal-finance-tracker/expense-tracker
+    ```
+  </Step>
+
+  <Step title="Install Flask">
+    Install the only required dependency.
+
+    ```bash
+    pip install flask
+    ```
+
+    <Tip>
+      Use a virtual environment to keep your system Python clean:
+
+      ```bash
+      python -m venv .venv
+      source .venv/bin/activate   # macOS/Linux
+      .venv\Scripts\activate      # Windows
+      pip install flask
+      ```
+    </Tip>
+  </Step>
+
+  <Step title="Start the development server">
+    Run the application with Python.
+
+    ```bash
+    python app.py
+    ```
+
+    You should see output similar to:
+
+    ```
+    * Running on http://127.0.0.1:5000
+    * Debug mode: on
+    ```
+
+    The SQLite database file (`database.db`) is created automatically on first run.
+  </Step>
+
+  <Step title="Open the app in your browser">
+    Navigate to `http://localhost:5000` in any web browser. The main dashboard loads with an empty expense list and chart area.
+
+    <Note>
+      Leave the terminal running while you use the app. Press `Ctrl+C` to stop the server when you are done.
+    </Note>
+  </Step>
+
+  <Step title="Add your first expense">
+    1. Click **Add Expense** (or the equivalent button in the UI).
+    2. Enter an **amount** — for example, `12.50`.
+    3. Select a **category** from the dropdown: Food, Transport, Shopping, Entertainment, Bills, Health, or Other.
+    4. Choose a **date** (defaults to today).
+    5. Optionally enter a **description** such as `Lunch at the market`.
+    6. Click **Save**.
+
+    The new entry appears in the expense list and the chart updates to reflect your spending.
+  </Step>
+
+  <Step title="Set your first budget limit">
+    1. Go to the **Budgets** section of the app.
+    2. Select the category you want to cap — for example, **Food**.
+    3. Enter a monthly limit — for example, `300`.
+    4. Click **Save Budget**.
+
+    The app will now show how much of your Food budget you have used whenever you view that category's spending.
+
+    <Tip>
+      Start with one or two categories where overspending is most common. You can add or adjust limits at any time.
+    </Tip>
+  </Step>
+</Steps>
+
+## What's next
+
+Once you have a few expenses recorded, explore the stats view to see a breakdown of spending by category. The Chart.js visualizations update automatically as you add data.
+
+<CardGroup cols={2}>
+  <Card title="API reference" icon="brackets-curly" href="/introduction">
+    Query or modify data directly through the JSON API.
+  </Card>
+  <Card title="Introduction" icon="book-open" href="/introduction">
+    Learn more about the app's architecture and design decisions.
+  </Card>
+</CardGroup>

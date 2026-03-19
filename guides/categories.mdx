@@ -1,0 +1,71 @@
+---
+title: 'Expense categories'
+description: 'Understand the seven built-in expense categories and how to use them consistently.'
+keywords: ['categories', 'expenses', 'budget', 'food', 'transport', 'shopping', 'entertainment', 'bills', 'health']
+---
+
+The Personal Finance Tracker organizes every expense into one of seven categories. Categories are also used to set individual budget limits, so choosing the right category for each expense directly affects how your spending is measured against your budget.
+
+## Available categories
+
+<CardGroup cols={2}>
+  <Card title="Food" icon="utensils">
+    Meals, groceries, dining out, coffee, snacks, and any food or drink purchases. Use this for both home cooking supplies and restaurant visits.
+  </Card>
+
+  <Card title="Transport" icon="car">
+    Fuel, public transit fares, ride-sharing (Uber, Lyft), parking fees, tolls, and vehicle maintenance costs.
+  </Card>
+
+  <Card title="Shopping" icon="shopping-bag">
+    Clothing, footwear, electronics, household goods, furniture, and general retail purchases.
+  </Card>
+
+  <Card title="Entertainment" icon="tv">
+    Streaming subscriptions, movie tickets, concerts, sports events, video games, books, and hobbies.
+  </Card>
+
+  <Card title="Bills" icon="file-text">
+    Utilities (electricity, water, internet), rent or mortgage payments, insurance premiums, and recurring service subscriptions.
+  </Card>
+
+  <Card title="Health" icon="heart-pulse">
+    Pharmacy purchases, doctor and dentist visits, hospital bills, gym memberships, and fitness equipment.
+  </Card>
+
+  <Card title="Other" icon="circle-ellipsis">
+    Anything that doesn't fit clearly into the categories above. Use this sparingly — if you find yourself using it often, consider whether a more specific category applies.
+  </Card>
+</CardGroup>
+
+## Categories and budget limits
+
+Each category has its own budget limit stored in the `budgets` table. When you add or update a budget, you assign a spending ceiling to a specific category. The app then compares your recorded expenses in that category against the limit to show how much of your budget you've used.
+
+This means:
+
+- Setting a budget for **Food** only tracks spending logged under Food — Transport expenses don't count toward it.
+- You can set budgets for some categories and leave others uncapped.
+- Changing the category on an existing expense will move that amount from one category's total to another.
+
+## Tips for consistent categorization
+
+<Tip>
+  Decide on your categorization rules once and stick to them. For example, decide whether a gym protein shake is **Food** or **Health** and apply that rule every time. Consistency makes your spending reports meaningful.
+</Tip>
+
+- **Groceries vs. dining out**: Both go under Food. Subcategory-level distinctions aren't supported.
+- **Streaming services**: Use Entertainment for media subscriptions (Netflix, Spotify) and Bills for essential service subscriptions (internet, phone plan).
+- **Ride to a doctor's appointment**: Use Transport for the ride, Health for the appointment cost — split them into two expense entries.
+- **Online shopping**: Use Shopping regardless of the retailer. If it's a household essential (toilet paper, cleaning supplies), Shopping still applies.
+- **Avoid overusing Other**: If you add many expenses to Other, your budget reports become less useful. Reassign them when in doubt.
+
+## Adding or changing categories
+
+The category list is fixed — it cannot be changed through the user interface. The seven categories are defined directly in the application code and in the database schema.
+
+To add a new category, you need to modify `app.py` and any relevant template or JavaScript files that reference the category list. This requires a code change and a server restart.
+
+<Note>
+  If you modify the category list in code, you will also need to handle any existing expenses or budget records that reference the old category names, since the database stores category values as plain strings.
+</Note>

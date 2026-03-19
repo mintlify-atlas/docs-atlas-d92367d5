@@ -1,0 +1,114 @@
+---
+title: 'Configuration'
+description: 'Configure the database, server port, debug mode, and data persistence for the Personal Finance Tracker.'
+keywords: ['configuration', 'database', 'port', 'debug mode', 'flask', 'sqlite']
+---
+
+The Personal Finance Tracker is configured by editing `app.py` directly. There is no separate config file — all runtime settings are controlled through the Flask app instance and the SQLite connection calls.
+
+## Database initialization
+
+When `app.py` is imported or run, it calls `init_db()` at module load time:
+
+```python app.py
+def init_db():
+    conn = sqlite3.connect('database.db')
+    # creates expenses and budgets tables if not exist
+
+init_db()  # called at module load
+```
+
+This means the database is created — and the schema is applied — every time the server starts. If the tables already exist, the `IF NOT EXISTS` clauses prevent them from being recreated. You do not need to run any migration commands manually.
+
+## Database file location
+
+SQLite resolves the filename `'database.db'` relative to the **working directory** where you run `python app.py`. If you start the server from inside `expense-tracker/`, the file is created at:
+
+```
+expense-tracker/database.db
+```
+
+If you run the script from a different directory, the database file will be created there instead, which can lead to confusion. Always run the app from the `expense-tracker/` directory.
+
+### Use an absolute path for the database
+
+To make the database location explicit regardless of working directory, update the `sqlite3.connect()` call in `app.py`:
+
+```python app.py
+import os
+
+DB_PATH = os.path.join(os.path.dirname(__file__), 'database.db')
+
+def init_db():
+    conn = sqlite3.connect(DB_PATH)
+    # ...
+```
+
+Replace every other `sqlite3.connect('database.db')` call in the file with `sqlite3.connect(DB_PATH)` to apply this consistently.
+
+## Changing the port
+
+By default, Flask listens on port `5000`. To use a different port, modify the `app.run()` call at the bottom of `app.py`:
+
+```python app.py
+if __name__ == '__main__':
+    app.run(debug=True, port=5001)
+```
+
+Then access the app at `http://localhost:5001`.
+
+## Debug mode
+
+Debug mode is enabled by default:
+
+```python app.py
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+Debug mode provides:
+
+- Automatic server restart when you save changes to `app.py`
+- Detailed in-browser error pages with stack traces
+- The interactive Werkzeug debugger
+
+<Warning>
+  Never run with `debug=True` in a production environment. Debug mode exposes an interactive Python console in the browser on error pages, which gives anyone who triggers an exception full access to your server environment. Set `debug=False` for any deployment accessible to other users.
+</Warning>
+
+To disable debug mode:
+
+```python app.py
+if __name__ == '__main__':
+    app.run(debug=False)
+```
+
+## Data persistence
+
+All application data — expenses and budget limits — is stored in `database.db`. This is a single SQLite file. There is no external database server to manage.
+
+### Backing up your data
+
+To back up all your data, copy the database file:
+
+```bash
+cp expense-tracker/database.db expense-tracker/database.db.backup
+```
+
+### Restoring from a backup
+
+Stop the server, then replace the database file with your backup:
+
+```bash
+cp expense-tracker/database.db.backup expense-tracker/database.db
+```
+
+Restart the server. Your data will be restored to the state at the time of the backup.
+
+### Moving data to another machine
+
+Copy `database.db` to the `expense-tracker/` directory on the other machine. As long as the schema version matches, the app will use it as-is.
+
+<Note>
+  Do not copy `database.db` while the server is running and actively writing data. Stop the server first to avoid copying a partially-written file.
+</Note>

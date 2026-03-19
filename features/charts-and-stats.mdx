@@ -1,0 +1,88 @@
+---
+title: Charts and stats
+description: Understand your spending at a glance with dashboard stat cards, a category doughnut chart, and a budget vs actual bar chart.
+keywords: [charts, stats, dashboard, doughnut chart, bar chart, category totals, spending insights, Chart.js]
+---
+
+The dashboard gives you an at-a-glance view of your financial activity through three stat cards, a category distribution doughnut chart, and a budget vs actual bar chart. All of these update automatically whenever you add, edit, or delete an expense or change a budget limit — no page reload required.
+
+## Dashboard stat cards
+
+<CardGroup cols={2}>
+  <Card title="Total expenses" icon="circle-dollar-sign">
+    The sum of all recorded expense amounts in USD. Calculated from every row in the `expenses` table. Recomputes whenever an expense is added, updated, or removed.
+  </Card>
+  <Card title="Transactions" icon="list">
+    The total number of individual expense records in the database. Gives you a sense of how frequently you are logging activity regardless of amount.
+  </Card>
+  <Card title="Average per transaction" icon="chart-line">
+    Total expenses divided by the number of transactions. Useful for spotting whether a spike in total spend is driven by many small purchases or a few large ones.
+  </Card>
+</CardGroup>
+
+## Category distribution doughnut chart
+
+The doughnut chart shows what proportion of your total spending belongs to each category. Each slice corresponds to one category and is sized relative to that category's share of the overall total.
+
+- **Hover** over a slice to see the category name and exact amount spent.
+- Categories with no expenses are excluded from the chart entirely.
+- The chart is drawn using the `/api/stats` endpoint, which returns `category_totals` — a map of category names to their summed amounts.
+
+This chart is most useful for identifying your biggest spending areas at a glance. If Food or Bills dominate the chart, those are the categories worth prioritizing when setting budget limits.
+
+## Budget vs Actual bar chart
+
+The bar chart compares your set budget limit against actual spending for each category that has a budget defined.
+
+- Each category renders as a pair of bars side by side.
+- The **budget limit bar** represents the cap you set for that category.
+- The **actual spending bar** represents the real amount spent so far.
+- Categories without a budget limit are omitted from the chart.
+
+This chart draws data from two sources:
+- `/api/budgets` — to retrieve each category's limit.
+- `/api/stats` — to retrieve the `category_totals` for actual spending.
+
+<Info>
+  Both charts are rendered using [Chart.js](https://www.chartjs.org/). Charts are initialized on page load and re-rendered in place (via `chart.update()`) whenever the underlying data changes. If a chart appears blank, ensure your browser supports the HTML5 Canvas element.
+</Info>
+
+## How stats are computed
+
+The `/api/stats` endpoint returns a single JSON object with:
+
+```json
+{
+  "total_expenses": 342.75,
+  "category_totals": {
+    "Food": 120.00,
+    "Transport": 45.50,
+    "Bills": 177.25
+  }
+}
+```
+
+The frontend derives the transaction count and average per transaction from the full expense list returned by `/api/expenses`, rather than from `/api/stats` directly.
+
+| Stat | Source | Computation |
+|---|---|---|
+| Total expenses | `/api/stats` | `total_expenses` field |
+| Transactions | `/api/expenses` | `expenses.length` |
+| Average per transaction | `/api/expenses` | `total_expenses / expenses.length` |
+| Category totals | `/api/stats` | `category_totals` map |
+
+## Automatic updates
+
+Every action that changes expense or budget data triggers a refresh of all three data sources (expenses, budgets, and stats) followed by a full re-render of the stat cards and both charts. The sequence is:
+
+<Steps>
+  <Step title="Action completes">
+    You add, edit, or delete an expense, or set a new budget limit. The API request succeeds and returns a confirmation.
+  </Step>
+  <Step title="Data is re-fetched">
+    The frontend calls `fetchExpenses()`, `fetchBudgets()`, and `fetchStats()` in sequence to pull the latest data from the server.
+  </Step>
+  <Step title="UI re-renders">
+    The stat cards update with new values, and both Chart.js charts re-render with the latest figures. No page reload is needed.
+  </Step>
+</Steps>

@@ -1,0 +1,84 @@
+---
+title: 'Update expense'
+description: 'Replace all fields of an existing expense by ID.'
+---
+
+`PUT /api/expenses/{expense_id}`
+
+Updates an existing expense. All body fields are required — this is a full replacement, not a partial update.
+
+<Note>
+  This endpoint replaces all fields on the expense. If you omit a field from the request body, it will be overwritten with an empty or zero value. Send all fields every time.
+</Note>
+
+## Path parameters
+
+<ParamField path="expense_id" type="integer" required>
+  The ID of the expense to update.
+</ParamField>
+
+## Request body
+
+<ParamField body="amount" type="number" required>
+  Updated expense amount. Must be greater than 0.
+</ParamField>
+
+<ParamField body="category" type="string" required>
+  Updated expense category. Must be one of: `Food`, `Transport`, `Shopping`, `Entertainment`, `Bills`, `Health`, `Other`.
+</ParamField>
+
+<ParamField body="date" type="string" required>
+  Updated date in `YYYY-MM-DD` format (ISO 8601).
+</ParamField>
+
+<ParamField body="description" type="string">
+  Updated description. Defaults to an empty string if omitted.
+</ParamField>
+
+## Response
+
+<ResponseField name="message" type="string" required>
+  Confirmation message. Always `"Expense updated successfully"`.
+</ResponseField>
+
+## Examples
+
+<CodeGroup>
+
+```bash curl
+curl --request PUT \
+  --url http://localhost:5000/api/expenses/4 \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "amount": 52.00,
+    "category": "Food",
+    "date": "2026-03-19",
+    "description": "Grocery run (updated)"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('http://localhost:5000/api/expenses/4', {
+  method: 'PUT',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    amount: 52.00,
+    category: 'Food',
+    date: '2026-03-19',
+    description: 'Grocery run (updated)',
+  }),
+});
+
+const result = await response.json();
+console.log(result);
+```
+
+</CodeGroup>
+
+### Sample response
+
+```json
+{
+  "message": "Expense updated successfully"
+}
+```

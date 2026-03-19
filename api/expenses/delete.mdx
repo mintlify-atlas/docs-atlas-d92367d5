@@ -1,0 +1,52 @@
+---
+title: 'Delete expense'
+description: 'Permanently remove an expense by ID.'
+---
+
+`DELETE /api/expenses/{expense_id}`
+
+Deletes an expense record from the database.
+
+<Warning>
+  Deletion is permanent. There is no way to recover a deleted expense.
+</Warning>
+
+## Path parameters
+
+<ParamField path="expense_id" type="integer" required>
+  The ID of the expense to delete.
+</ParamField>
+
+## Response
+
+<ResponseField name="message" type="string" required>
+  Confirmation message. Always `"Expense deleted successfully"`.
+</ResponseField>
+
+## Examples
+
+<CodeGroup>
+
+```bash curl
+curl --request DELETE \
+  --url http://localhost:5000/api/expenses/4
+```
+
+```javascript JavaScript
+const response = await fetch('http://localhost:5000/api/expenses/4', {
+  method: 'DELETE',
+});
+
+const result = await response.json();
+console.log(result);
+```
+
+</CodeGroup>
+
+### Sample response
+
+```json
+{
+  "message": "Expense deleted successfully"
+}
+```

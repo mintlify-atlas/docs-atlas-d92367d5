@@ -1,0 +1,87 @@
+---
+title: Expense management
+description: Add, edit, and delete expense entries to keep an accurate record of your spending.
+keywords: [expenses, add expense, edit expense, delete expense, expense table, form validation]
+---
+
+The expense management feature is the core of Personal Finance Tracker. Every transaction you record is stored in the local SQLite database and appears in the expense table on the dashboard, ordered from most recent to oldest.
+
+## Expense table
+
+The table on the main dashboard lists all recorded expenses. Each row contains the following columns:
+
+| Column | Description |
+|---|---|
+| **Date** | The date the expense occurred, displayed in chronological descending order |
+| **Category** | One of the seven built-in spending categories |
+| **Description** | Optional free-text note about the expense |
+| **Amount** | The expense value in USD |
+| **Actions** | **Edit** and **Delete** buttons for the row |
+
+## Adding an expense
+
+<Steps>
+  <Step title="Fill in the expense form">
+    Locate the **Add Expense** form at the top of the dashboard. Complete each field:
+
+    - **Amount** — Enter the expense value in USD. Must be greater than 0.
+    - **Category** — Select one of the seven categories from the dropdown: Food, Transport, Shopping, Entertainment, Bills, Health, or Other.
+    - **Date** — Pick the date the expense occurred using the date picker. This field is required.
+    - **Description** — Optionally add a short note to describe the expense (for example, "Grocery run" or "Monthly gym membership").
+  </Step>
+  <Step title="Submit the form">
+    Click **Add Expense**. The app validates the form before saving. If validation passes, the new expense is written to the database and the table refreshes immediately.
+  </Step>
+  <Step title="Confirm the entry appears">
+    The new expense appears at the top of the expense table. The dashboard stats and charts also update to reflect the new total.
+  </Step>
+</Steps>
+
+## Form validation rules
+
+The following rules are enforced before any expense is saved:
+
+| Field | Rule |
+|---|---|
+| **Amount** | Must be a number greater than 0 |
+| **Category** | A category must be selected |
+| **Date** | A date must be selected |
+| **Description** | Optional — no validation applied |
+
+If any required field is missing or invalid, the form will not submit and an inline error is shown.
+
+## Editing an expense
+
+<Steps>
+  <Step title="Click Edit">
+    In the **Actions** column of the expense you want to change, click the **Edit** button. The page scrolls back to the top of the form.
+  </Step>
+  <Step title="Modify the pre-filled fields">
+    The form is pre-filled with the existing values for that expense — amount, category, date, and description. Update whichever fields need to change.
+  </Step>
+  <Step title="Submit the update">
+    Click **Update Expense** to save your changes. The table refreshes and the row reflects the new values. The dashboard stats and charts update accordingly.
+  </Step>
+</Steps>
+
+<Note>
+  While editing, a **Cancel** button appears next to the submit button. Clicking **Cancel** clears the form and returns it to "Add" mode without saving any changes.
+</Note>
+
+## Deleting an expense
+
+<Steps>
+  <Step title="Click Delete">
+    In the **Actions** column of the expense you want to remove, click the **Delete** button.
+  </Step>
+  <Step title="Confirm the deletion">
+    A confirmation dialog appears asking you to confirm. Click **OK** to proceed or **Cancel** to abort.
+  </Step>
+  <Step title="Verify the expense is removed">
+    The expense is permanently removed from the database. The table, stats, and charts all update immediately.
+  </Step>
+</Steps>
+
+<Warning>
+  Deletion is permanent. There is no undo — once you confirm, the expense record is gone from the database.
+</Warning>

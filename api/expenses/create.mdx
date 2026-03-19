@@ -1,0 +1,90 @@
+---
+title: 'Create expense'
+description: 'Add a new expense record to the database.'
+---
+
+`POST /api/expenses`
+
+Creates a new expense and returns its assigned ID.
+
+## Request body
+
+<ParamField body="amount" type="number" required>
+  Expense amount. Must be greater than 0.
+</ParamField>
+
+<ParamField body="category" type="string" required>
+  Expense category. Must be one of: `Food`, `Transport`, `Shopping`, `Entertainment`, `Bills`, `Health`, `Other`.
+</ParamField>
+
+<ParamField body="date" type="string" required>
+  Date of the expense in `YYYY-MM-DD` format (ISO 8601).
+</ParamField>
+
+<ParamField body="description" type="string">
+  Optional description of the expense. Defaults to an empty string if omitted.
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="integer" required>
+  The ID assigned to the newly created expense.
+</ResponseField>
+
+<ResponseField name="message" type="string" required>
+  Confirmation message. Always `"Expense added successfully"`.
+</ResponseField>
+
+## Examples
+
+<CodeGroup>
+
+```bash curl
+curl --request POST \
+  --url http://localhost:5000/api/expenses \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "amount": 45.99,
+    "category": "Food",
+    "date": "2026-03-19",
+    "description": "Grocery run"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch('http://localhost:5000/api/expenses', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    amount: 45.99,
+    category: 'Food',
+    date: '2026-03-19',
+    description: 'Grocery run',
+  }),
+});
+
+const result = await response.json();
+console.log(result);
+```
+
+</CodeGroup>
+
+### Sample request
+
+```json
+{
+  "amount": 45.99,
+  "category": "Food",
+  "date": "2026-03-19",
+  "description": "Grocery run"
+}
+```
+
+### Sample response
+
+```json
+{
+  "id": 4,
+  "message": "Expense added successfully"
+}
+```
