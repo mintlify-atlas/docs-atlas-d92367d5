@@ -24,12 +24,12 @@ This guide walks you through installing, starting, and making your first entries
     <CodeGroup>
 
     ```bash git clone
-    git clone https://github.com/your-org/personal-finance-tracker.git
+    git clone https://github.com/shaikmohammedrehaan48/RealTimeProject-March-19TH.git
     ```
 
     ```bash download zip
     # Download the ZIP from the repository and unzip it
-    unzip personal-finance-tracker.zip
+    unzip RealTimeProject-March-19TH.zip
     ```
 
     </CodeGroup>
@@ -39,7 +39,7 @@ This guide walks you through installing, starting, and making your first entries
     The Flask application lives inside the `expense-tracker/` subdirectory.
 
     ```bash
-    cd personal-finance-tracker/expense-tracker
+    cd RealTimeProject-March-19TH/expense-tracker
     ```
   </Step>
 
@@ -88,21 +88,20 @@ This guide walks you through installing, starting, and making your first entries
   </Step>
 
   <Step title="Add your first expense">
-    1. Click **Add Expense** (or the equivalent button in the UI).
-    2. Enter an **amount** — for example, `12.50`.
-    3. Select a **category** from the dropdown: Food, Transport, Shopping, Entertainment, Bills, Health, or Other.
-    4. Choose a **date** (defaults to today).
-    5. Optionally enter a **description** such as `Lunch at the market`.
-    6. Click **Save**.
+    1. Fill in the **Amount** field — for example, `12.50`.
+    2. Select a **Category** from the dropdown: Food, Transport, Shopping, Entertainment, Bills, Health, or Other.
+    3. Choose a **Date** using the date picker (defaults to today).
+    4. Optionally enter a **Description** such as `Lunch at the market`.
+    5. Click **Add Expense**.
 
     The new entry appears in the expense list and the chart updates to reflect your spending.
   </Step>
 
   <Step title="Set your first budget limit">
-    1. Go to the **Budgets** section of the app.
+    1. Scroll down to the **Set Budget Limits** form on the dashboard.
     2. Select the category you want to cap — for example, **Food**.
     3. Enter a monthly limit — for example, `300`.
-    4. Click **Save Budget**.
+    4. Click **Set Budget**.
 
     The app will now show how much of your Food budget you have used whenever you view that category's spending.
 
@@ -117,10 +116,10 @@ This guide walks you through installing, starting, and making your first entries
 Once you have a few expenses recorded, explore the stats view to see a breakdown of spending by category. The Chart.js visualizations update automatically as you add data.
 
 <CardGroup cols={2}>
-  <Card title="API reference" icon="brackets-curly" href="/introduction">
+  <Card title="API reference" icon="brackets-curly" href="/api/expenses/list">
     Query or modify data directly through the JSON API.
   </Card>
-  <Card title="Introduction" icon="book-open" href="/introduction">
-    Learn more about the app's architecture and design decisions.
+  <Card title="Core features" icon="book-open" href="/features/expense-management">
+    Learn more about expense management, budgets, and charts.
   </Card>
 </CardGroup>

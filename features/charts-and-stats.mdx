@@ -44,7 +44,7 @@ This chart draws data from two sources:
 - `/api/stats` — to retrieve the `category_totals` for actual spending.
 
 <Info>
-  Both charts are rendered using [Chart.js](https://www.chartjs.org/). Charts are initialized on page load and re-rendered in place (via `chart.update()`) whenever the underlying data changes. If a chart appears blank, ensure your browser supports the HTML5 Canvas element.
+  Both charts are rendered using [Chart.js](https://www.chartjs.org/). When data changes, the existing chart instance is destroyed and a new one is created on the same canvas element. If a chart appears blank, ensure your browser supports the HTML5 Canvas element.
 </Info>
 
 ## How stats are computed
@@ -80,9 +80,9 @@ Every action that changes expense or budget data triggers a refresh of all three
     You add, edit, or delete an expense, or set a new budget limit. The API request succeeds and returns a confirmation.
   </Step>
   <Step title="Data is re-fetched">
-    The frontend calls `fetchExpenses()`, `fetchBudgets()`, and `fetchStats()` in sequence to pull the latest data from the server.
+    The frontend calls `loadExpenses()`, `loadBudgets()`, and `loadStats()` to pull the latest data from the server.
   </Step>
   <Step title="UI re-renders">
-    The stat cards update with new values, and both Chart.js charts re-render with the latest figures. No page reload is needed.
+    The stat cards update with new values. Both Chart.js charts are destroyed and recreated with fresh data — `categoryChart.destroy()` and `budgetChart.destroy()` are called before a new `Chart()` instance is created. No page reload is needed.
   </Step>
 </Steps>
